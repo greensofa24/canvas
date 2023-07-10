@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+<label>Color</label>
+<input type="color" value="#ffffff" onchange="ctx.clearRect(-200, -200, 400, 400);
+shape(0, 0, 200, document.querySelectorAll('input')[2].value, this.value, document.querySelectorAll('input')[1].value);">
+<br>
+<br>
+<label>Outline</label>
+<input type="color" value="#000000" onchange="ctx.clearRect(-200, -200, 400, 400);
+shape(0, 0, 200, document.querySelectorAll('input')[2].value, document.querySelector('input').value, this.value);">
+<br>
+<br>
+<label>Sides</label>
+<input type="number" value="3" onchange="ctx.clearRect(-200, -200, 400, 400);
+shape(0, 0, 200, this.value, document.querySelector('input').value, document.querySelectorAll('input')[1].value);">
+<br>
+<br>
+<br>
+
+<canvas width=400 height=400></canvas>
+
+<script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d');
+
+function shape(x, y, r, s, c, l) {
+var x = x;
+var y = y;
+var r = r;
+var s = s;
+var a = 2 * Math.PI / s;
+var f = Math.PI * (s - 2) / s / 2;
+ctx.beginPath();
+ctx.fillStyle = c;
+ctx.strokeStyle = l;
+ctx.lineWidth = 1.5;
+ctx.translate(x, y);
+for (i = 1; i <= s + 1; i++) {
+ctx.lineTo(r * Math.cos(i * a + f), r * Math.sin(i * a + f));
+}
+ctx.fill();
+ctx.stroke();
+}
+
+var a = shape(200, 200, 200, 3, "white", "black");
+</script>
+</body>
+</html>
