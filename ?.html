@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+canvas {
+border: 1px solid #000;
+}
+</style>
+</head>
+
+<body onload="startGame()">
+<script>
+var square;
+
+function startGame() {
+
+area.start();
+}
+
+var area = {
+canvas : document.createElement("canvas"),
+start : function() {
+this.canvas.width = 400;
+this.canvas.height = 400;
+this.context = this.canvas.getContext("2d");
+document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+this.interval = setInterval(updateGameArea, 1);
+},
+clear : function() {
+this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+}
+}
+
+function rect(x, y, width, height, color) {
+this.width = width;
+this.height = height;
+this.x = x;
+this.y = y;    
+this.update = function() {
+ctx = area.context;
+ctx.fillStyle = color;
+ctx.fillRect(this.x, this.y, this.width, this.height);
+}
+}
+
+function shape(x, y, r, s, c, l) {
+this.x = x;
+this.y = y; 
+this.update = function() {
+ctx = area.context;
+ctx.fillStyle = c;
+ctx.strokeStyle = l;
+for (i = 1; i <= this.s + 1; i++) {
+ctx.lineTo(this.r * Math.cos(i * a + f), this.r * Math.sin(i * a + f));
+}
+ctx.fill();
+ctx.stroke();
+}
+this.r = r;
+this.s = s;
+a = 2 * Math.PI / s;
+f = Math.PI * (s - 2) / s / 2;
+ctx.beginPath();
+ctx.fillStyle = c;
+ctx.strokeStyle = l;
+ctx.lineWidth = 1.5;
+ctx.translate(this.x, this.y);
+for (i = 1; i <= this.s + 1; i++) {
+ctx.lineTo(this.r * Math.cos(i * a + f), this.r * Math.sin(i * a + f));
+}
+ctx.fill();
+ctx.stroke();
+}
+
+function updateGameArea() {
+area.clear();    
+square.update();
+}
+
+
+setInterval(function(){square.y -= 1;}, 10);
+</script>
+
+</body>
+</html>
