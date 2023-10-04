@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tomato</title>
+<style>
+body {
+overflow: hidden;
+}
+
+canvas {
+position: absolute;
+top: 0;
+left: 0;
+}
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+const canvas = document.getElementById("canvas");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+const ctx = canvas.getContext("2d");
+
+ctx.fillStyle = "#0F0";
+ctx.fillRect(innerWidth / 2 - 5, innerHeight / 2 - 65, 11, 35);
+
+const tomato = new Path2D();
+tomato.arc(innerWidth / 2 - 25, innerHeight / 2 + 10, 50, 0, 2 * Math.PI);
+tomato.arc(innerWidth / 2 + 25, innerHeight / 2 + 10, 50, 0, 2 * Math.PI);
+ctx.fillStyle = "#F00";
+ctx.fill(tomato);
+
+ctx.font = "25px Comic Sans MS";
+ctx.fillStyle = "#000";
+ctx.fillText("A vanilla js remake of a thing in a khan academy course", 12, innerHeight - 25);
+
+canvas.addEventListener("mousemove", (event) => {
+ctx.beginPath();
+ctx.fillStyle = "#FFF";
+ctx.arc(event.offsetX, event.offsetY, 15, 0, 2 * Math.PI);
+ctx.fill();
+ctx.closePath();
+});
+</script>
+
+</body>
+</html>
