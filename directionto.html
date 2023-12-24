@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test</title>
+<style>
+body {
+overflow: hidden;
+}
+
+canvas {
+position: absolute;
+top: 0;
+left: 0;
+}
+</style>
+</head>
+<body>
+
+<canvas></canvas>
+
+<script>
+const canvas = document.querySelector("canvas");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+const ctx = canvas.getContext("2d");
+
+function rect(x, y, width, height, color) {
+this.x = x;
+this.y = y;
+this.width = width;
+this.height = height;
+ctx.fillStyle = color;
+ctx.fillRect(x, y, width, height);
+this.draw = function(){
+ctx.fillStyle = color;
+ctx.fillRect(this.x, this.y, this.width, this.height);
+}
+}
+
+function square(x, y, size, color) {
+this.x = x;
+this.y = y;
+this.size = size;
+ctx.fillStyle = color;
+ctx.fillRect(x, y, size, size);
+this.draw = function(){
+ctx.fillStyle = color;
+ctx.fillRect(this.x, this.y, this.size, this.size);
+}
+}
+
+setInterval(function(){update()}, 1000);
+const red = new square(Math.random() * innerWidth - 15, Math.random() * innerHeight - 15, 30, "#ff0000aa");
+const blue = new square(innerWidth / 2 - 15, innerHeight / 2 - 15, 30, "#0000ffaa");
+let diffx = blue.x - red.x;
+let diffy = blue.y - red.y;
+//if (red.x < blue.x && red.y < blue.y) {
+let quad = 1;
+//}
+
+function update() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (quad == 1) {
+  if (red.x < blue.x && red.y < blue.y) {
+  let diff = 1 / (diffx / 50 + diffy / 50) / 20;
+  red.x += diffx * diff;
+  red.y += diffy * diff;
+  } else {
+  red.x = blue.x;
+  red.y = blue.y;
+  }
+  }
+  
+  red.draw();
+  blue.draw();
+}
+</script>
+
+</body>
+</html>
