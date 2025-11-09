@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+body {
+overflow: hidden;
+}
+
+canvas {
+position: absolute;
+top: 0;
+left: 0;
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+const ctx = canvas.getContext("2d");
+
+function moveTo(x, y) {
+ctx.moveTo(innerWidth / 2 + x, innerHeight / 2 + y);
+}
+
+function lineTo(x, y) {
+ctx.lineTo(innerWidth / 2 + x, innerHeight / 2 + y);
+}
+
+function fill() {
+ctx.fill();
+}
+
+function stroke() {
+ctx.stroke();
+}
+
+function int(n) {
+return Math.abs(n - Math.round(n)) < 1e-10;
+}
+
+function polygon(...coords) {
+ctx.beginPath();
+moveTo(...coords[0]);
+for (let i = 1; i < coords.length; i++) {
+lineTo(...coords[i]);
+}
+ctx.closePath();
+}
+
+function regPolygon(sides, size) {
+let coords = [];
+let mult = 0;
+let cycle = 0;
+while (!mult) {
+cycle += 1;
+if (int(sides * cycle)) {
+mult = cycle;
+}
+}
+for (let i = 0; i < sides * mult; i++) {
+let angle = 2 * i * Math.PI / sides;
+let corr = 1 / sides * Math.PI;
+coords.push([Math.sin(angle + corr) * size, Math.cos(angle + corr) * size]);
+}
+polygon(...coords);
+}
+
+regPolygon(5/2, 50);
+stroke();
+fill();
+
+/*
+let sides = 2;
+setInterval(() => {
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+regPolygon(sides, 50);
+stroke();
+fill();
+sides += (Math.floor(Math.random() * 2) - 0.5) / 5;
+
+}, 100)*/
+</script>
+
+</body>
+</html>
